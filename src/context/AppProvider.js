@@ -15,9 +15,7 @@ const AppProvider = ({ children }) => {
 };
 
 AppProvider.propTypes = {
-  children: PropTypes.shape({
-    isLogged: PropTypes.bool,
-  }),
+  children: PropTypes.shape(),
 };
 
 export default AppProvider;
