@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import ProjectsContext from '../context/ProjectsContext';
 
 // import { Container } from './styles';
 
@@ -8,18 +9,28 @@ function ProjectCard({ project }) {
   const initialDate = new Date(project.initialDate);
   const endDate = new Date(project.endDate);
 
-  const parsedInitialDate = `${initialDate.getDate()} / ${initialDate.getMonth()} / ${initialDate.getFullYear()}`;
+  const parsedInitialDate = `${initialDate.getDate()}/${initialDate.getMonth()}/${initialDate.getFullYear()}`;
+  const parsedEndDate = `${endDate.getDate()}/${endDate.getMonth()}/${endDate.getFullYear()}`;
 
-  const parsedEndDate = `${endDate.getDate()} / ${endDate.getMonth()} / ${endDate.getFullYear()}`;
+  const { setFocusProject } = useContext(ProjectsContext);
 
   return (
-    <div className="project card" >
+    <div
+      onClick={() => {
+        setFocusProject(project);
+      } }
+      className="project card" >
       <div className="card-header">
-        <span>{ project.category }</span>
+        { project.category !== '' && <span className={`category ${project.category}`}
+        >{ project.category }</span>}
         <h4>{ project.name}</h4>
         <p className="client-name card-label">
           {project.client.name} <span>({project.client.companyName})</span>
         </p>
+      </div>
+
+      <div className="card-status-box" >
+        <p className={project.status}>{ project.status }</p>
       </div>
 
 

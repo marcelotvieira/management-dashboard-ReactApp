@@ -29,3 +29,26 @@ export const getProjects = (user) => {
   );
 };
 
+export const getClients = (user) => {
+  const headers = {
+    'authorization': user,
+    'Content-Type': 'application/json',
+  };
+  return axios.get(
+    'http://localhost:3001/clients',
+    { headers }
+  );
+};
+
+export const insertProject = (payload, user) => {
+  const headers = {
+    'authorization': user,
+    'Content-Type': 'application/json',
+  };
+  return axios.post(
+    'http://localhost:3001/projects',
+    payload,
+    { headers }
+  );
+};
+

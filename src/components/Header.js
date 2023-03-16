@@ -8,7 +8,7 @@ function Header() {
   return (
     <aside className="header">
       <h3>{ userData.firstName }</h3>
-      <p>{userData.email}</p>
+      <p className="user-email">{userData.email}</p>
     </aside>
   );
 }

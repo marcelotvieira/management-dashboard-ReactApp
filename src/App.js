@@ -5,8 +5,11 @@ import './style/index.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import ProjectsProvider from './context/ProjectsProvider';
+import ClientsProvider from './context/ClientsProvider';
+
 
 function App() {
+
   return <div>
     <BrowserRouter>
       <div className="container">
@@ -14,8 +17,10 @@ function App() {
           <Header />
           <Switch>
             <ProjectsProvider>
-              <Route exact path="/login" component={Login}/>
-              <Route exact path="/" component={Home}/>
+              <ClientsProvider>
+                <Route exact path="/login" component={Login}/>
+                <Route exact path="/" component={Home}/>
+              </ClientsProvider>
             </ProjectsProvider>
           </Switch>
         </div>
