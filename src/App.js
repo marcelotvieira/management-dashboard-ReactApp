@@ -3,9 +3,11 @@ import Login from './pages/Login';
 import Home from './pages/Home';
 import './style/index.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import Header from './components/Header';
 import ProjectsProvider from './context/ProjectsProvider';
 import ClientsProvider from './context/ClientsProvider';
+import ProjectPage from './pages/Projects.page';
+import ClientPage from './pages/Clients.page';
+import DataPage from './pages/Data.page';
 
 
 function App() {
@@ -14,12 +16,14 @@ function App() {
     <BrowserRouter>
       <div className="container">
         <div className="box">
-          <Header />
           <Switch>
             <ProjectsProvider>
               <ClientsProvider>
                 <Route exact path="/login" component={Login}/>
                 <Route exact path="/" component={Home}/>
+                <Route exact path="/projects" component={ProjectPage}/>
+                <Route exact path="/clients" component={ClientPage}/>
+                <Route exact path="/data" component={DataPage}/>
               </ClientsProvider>
             </ProjectsProvider>
           </Switch>

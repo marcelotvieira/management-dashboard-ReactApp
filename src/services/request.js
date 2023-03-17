@@ -7,6 +7,13 @@ export const userLogin = (payload) => {
   );
 };
 
+export const userRegister = (payload) => {
+  return axios.post(
+    'http://localhost:3001/user/register',
+    payload
+  );
+};
+
 export const getUser = (payload, user) => {
   const headers = {
     'authorization': user,

@@ -11,8 +11,8 @@ function Projects() {
   const {
     userProjects,
     getUserProjects,
-    filteredProjects
-    , toggleProjectForm,
+    filteredProjects,
+    toggleProjectForm,
     handleChangeFilter,
     filterOptions,
     setFilteredProjects,
@@ -24,8 +24,8 @@ function Projects() {
     const filtered = userProjects.filter((project) => {
       return (
         project.status.includes(filterOptions.status) &&
-         project.client.name.includes(filterOptions.client) &&
-         (project.name).toLowerCase().includes((filterOptions.name).toLowerCase())
+        project.client.name.includes(filterOptions.client) &&
+        (project.name).toLowerCase().includes((filterOptions.name).toLowerCase())
       );
     });
     setFilteredProjects(filtered);
@@ -39,15 +39,12 @@ function Projects() {
     filterProjects();
   }, [filterOptions, filterProjects, userProjects]);
 
-
   useEffect(() => {
     getUserProjects(user);
   }, [user]);
 
-
-
   const statusFilterOptions = [
-    'Todos os Projetos',
+    'Todos os Status',
     'Fechado',
     'Entregue',
     'Negociando'
@@ -58,10 +55,9 @@ function Projects() {
     ...userClients.map((i) => i.name)
   ];
 
-
   return (
     <div className="projects">
-      {userProjects.length < 1 && <h3> Você não possui nenhum projeto.</h3>}
+      {userProjects.length < 1 && <h3 className="input-success"> Você não possui nenhum projeto.</h3>}
 
       <div className="filter-options">
         <div className="flex">
