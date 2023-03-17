@@ -17,12 +17,12 @@ function Home() {
 
 
   useEffect(() => {
-    const user = localStorage.getItem('user');
-    if (user) {
-      setUser(user);
+    const currentUser = localStorage.getItem('user');
+    if (currentUser) {
+      setUser(currentUser);
     }
-    getUserData({}, user);
-  });
+    getUserData({}, currentUser);
+  }, []);
 
   if (!user) return <Redirect to="/login" />;
   return (

@@ -197,9 +197,20 @@
   background-color: rgb(249, 249, 252);
   padding: 1rem;
   max-width: 64.2rem;
+  min-width: 64.2rem;
   border-radius: 0.8rem;
 }
-.projects .select {
+.projects .filter-options {
+  display: flex;
+  width: 100%;
+}
+.projects .filter-options form {
+  width: 100%;
+}
+.projects .filter-options input {
+  width: 100%;
+}
+.projects .filter-options .select {
   margin-bottom: 1rem;
   margin-right: 1rem;
 }

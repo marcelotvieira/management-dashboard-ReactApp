@@ -1,57 +1,109 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import AppContext from '../context/AppContext';
 import ClientsContext from '../context/ClientsContext';
 import ProjectsContext from '../context/ProjectsContext';
 import InputSelect from './inputSelect';
 import ProjectCard from './ProjectCard';
 
-// import { Container } from './styles';
-
 function Projects() {
 
   const { user } = useContext(AppContext);
-  const { userProjects, getUserProjects, toggleProjectForm } = useContext(ProjectsContext);
+  const {
+    userProjects,
+    getUserProjects,
+    filteredProjects
+    , toggleProjectForm,
+    handleChangeFilter,
+    filterOptions,
+    setFilteredProjects,
+  } = useContext(ProjectsContext);
+
   const { getUserClients, userClients } = useContext(ClientsContext);
+
+  const filterProjects = useCallback(() => {
+    const filtered = userProjects.filter((project) => {
+      return (
+        project.status.includes(filterOptions.status) &&
+         project.client.name.includes(filterOptions.client) &&
+         (project.name).toLowerCase().includes((filterOptions.name).toLowerCase())
+      );
+    });
+    setFilteredProjects(filtered);
+  }, [filterOptions, userProjects]);
+
+  useEffect(() => {
+    getUserClients(user);
+  }, [user]);
+
+  useEffect(() => {
+    filterProjects();
+  }, [filterOptions, filterProjects, userProjects]);
 
 
   useEffect(() => {
     getUserProjects(user);
-    getUserClients(user);
-  }, [userProjects]);
+  }, [user]);
+
+
 
   const statusFilterOptions = [
     'Todos os Projetos',
-    'Projetos em andamento',
-    'Projetos entregues',
-    'Projetos em negociação'
+    'Fechado',
+    'Entregue',
+    'Negociando'
   ];
-  
 
-  return <div className="projects">
-    { userProjects.length < 1 && <h3> Você não possui nenhum projeto.</h3>}
-
-    <InputSelect options={statusFilterOptions} />
-    <InputSelect options={userClients.map((i) => i.name)} />
+  const clientFilterOptions = [
+    'Todos os Clientes',
+    ...userClients.map((i) => i.name)
+  ];
 
 
-    <div className="projects-container">
+  return (
+    <div className="projects">
+      {userProjects.length < 1 && <h3> Você não possui nenhum projeto.</h3>}
 
-      <button
-        type="button"
-        onClick={toggleProjectForm}
-        className="addProject-button card"
-      >
-        <i className="fa-solid fa-plus fa-5x" />
-      </button>
+      <div className="filter-options">
+        <div className="flex">
+          <InputSelect name="status" handleChange={handleChangeFilter} options={statusFilterOptions} />
+          <InputSelect name="client" handleChange={handleChangeFilter} options={clientFilterOptions} />
+        </div>
 
-      { userProjects.length > 0 && userProjects.map((project) => (
-        <ProjectCard
-          key={project.id}
-          project={project}
-        />
-      ))}
+        <form name="name" onSubmit={(e) => {
+          e.preventDefault();
+          handleChangeFilter({
+            target: {
+              name: e.target.name,
+              value: e.target[0].value,
+            }
+          });
+        }}>
+          <input />
+        </form>
+      </div>
+
+      <div className="projects-container">
+        <button
+          type="button"
+          onClick={toggleProjectForm}
+          className="addProject-button card"
+        >
+          <i className="fa-solid fa-plus fa-5x" />
+        </button>
+        {filteredProjects ? filteredProjects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+          />
+        )) : userProjects.map((project) => (
+          <ProjectCard
+            key={project.id}
+            project={project}
+          />))}
+      </div>
+
     </div>
-  </div>;
+  );
 }
 
 export default Projects;

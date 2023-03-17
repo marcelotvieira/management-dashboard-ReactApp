@@ -5,12 +5,23 @@ import { getProjects, insertProject } from '../services/request';
 const UseProject = () => {
 
   const { user } = useContext(AppContext);
+  const [visibleProjects, setVisibleProjects] = useState([]);
+
 
   const [focusProject, setFocusProject] = useState();
   const [userProjects, setUserProjects] = useState([]);
   const [isActiveForm, toggleActiveForm] = useState(false);
   const [inputError, setInputError] = useState(false);
   const [projectTags, setProjectTags] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState();
+  const [filterOptions, setFilterOptions] = useState({
+    status: '',
+    client: '',
+    name: '',
+  });
+
+
+
 
 
   const getUserProjects = (user) => {
@@ -20,6 +31,16 @@ const UseProject = () => {
       })
       .catch(err => console.log(err.response.data));
   };
+
+  const handleChangeFilter = (e) => {
+    const { name, value } = e.target;
+    const filters = {...filterOptions, [name]: value };
+    if (value.includes('Todos')) filters[name] = '';
+
+    setFilterOptions(filters);
+  };
+
+
 
   const handleChangeTag = (e) => {
     const { checked, value } = e.target;
@@ -78,7 +99,12 @@ const UseProject = () => {
     setInputError,
     projectTags,
     handleChangeTag,
-
+    filteredProjects,
+    handleChangeFilter,
+    setFilteredProjects,
+    filterOptions,
+    visibleProjects,
+    setVisibleProjects,
   };
 };
 
