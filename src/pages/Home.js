@@ -16,8 +16,11 @@ function Home() {
   if (!user) return <Redirect to="/login" />;
 
   return (
-    <div>
+    <div className="box">
       <Header />
+      <div className="projects-page page">
+        <h3>In progress</h3>
+      </div>
     </div>
   );
 }

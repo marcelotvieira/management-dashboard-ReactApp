@@ -6,6 +6,8 @@ const UseClients = () => {
 
   const [ userClients, setUserClients ] = useState([]);
   const { user } = useContext(AppContext);
+  const [searchValue, setSearchValue] = useState();
+
 
   const getUserClients = () => {
     getClients(user)
@@ -15,7 +17,12 @@ const UseClients = () => {
       .catch(err => console.log(err.response.data));
   };
 
-  return { getUserClients, userClients };
+  const handleChangeFilter = (e) => {
+    const { value } = e.target;
+    setSearchValue(value);
+  };
+
+  return { getUserClients, searchValue, handleChangeFilter, userClients };
 };
 
 

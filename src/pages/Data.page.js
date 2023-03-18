@@ -9,9 +9,14 @@ function DataPage() {
   const { user } = useContext(AppContext);
   
   if (!user) return <Redirect to="/" />;
-  return <div>
-    <Header />
-  </div>;
+  return (
+    <div className="box">
+      <Header />
+      <div className="projects-page page">
+        <h3>In progress</h3>
+      </div>
+    </div>
+  );
 }
 
 export default DataPage;
