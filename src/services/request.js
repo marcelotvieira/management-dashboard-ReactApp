@@ -48,6 +48,7 @@ export const getClients = (user) => {
 };
 
 export const insertProject = (payload, user) => {
+  console.log(payload);
   const headers = {
     'authorization': user,
     'Content-Type': 'application/json',

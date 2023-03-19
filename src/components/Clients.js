@@ -8,7 +8,7 @@ import ClientCard from './ClientCard';
 function Clients() {
   const { user } = useContext(AppContext);
   const [matchClients, setMatchClients] = useState([]);
-  const { getUserClients, userClients, searchValue, handleChangeFilter } = useContext(ClientsContext);
+  const { getUserClients, toggleClientForm, userClients, searchValue, handleChangeFilter } = useContext(ClientsContext);
 
 
   useEffect(() => {
@@ -37,6 +37,13 @@ function Clients() {
         </form>
       </div>
       <div className="clients-container">
+        <button
+          type="button"
+          onClick={toggleClientForm}
+          className="addProject-button card"
+        >
+          <i className="fa-solid fa-plus fa-5x" />
+        </button>
         {
           !searchValue ? userClients.map((client, index) => (
             <ClientCard key={index} client={client} />

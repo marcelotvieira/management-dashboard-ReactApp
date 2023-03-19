@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-
+import React, { useContext, useState, useEffect } from 'react';
 import {
   CartesianGrid,
   XAxis,
@@ -11,26 +10,25 @@ import {
 } from 'recharts';
 import ProjectsContext from '../../context/ProjectsContext';
 
-
 function StatusGraphic() {
-
   const { userProjects } = useContext(ProjectsContext);
+  const [projectStatusData, setProjectStatusData] = useState([]);
 
+  useEffect(() => {
+    const statusData = [
+      {
+        name: 'Status de Projetos',
+        Entregue: userProjects.filter((project) => project.status === 'Entregue').length,
+        Fechado: userProjects.filter((project) => project.status === 'Fechado').length,
+        Negociando: userProjects.filter((project) => project.status === 'Negociando').length,
+      },
+    ];
+    setProjectStatusData(statusData);
+  }, [userProjects]);
 
-
-  const data = [
-    {
-      'name': 'Status de Projetos',
-      'Entregue': userProjects.filter((project) => project.status === 'Entregue').length,
-      'Fechado': userProjects.filter((project) => project.status === 'Fechado').length,
-      'Negociando': userProjects.filter((project) => project.status === 'Negociando').length,
-    },
-  ];
-
-  
   return (
-    <div>    
-      <BarChart className="bar-chart" width={460} height={250} data={data}>
+    <div>
+      <BarChart className="bar-chart" width={460} height={250} data={projectStatusData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
@@ -42,7 +40,6 @@ function StatusGraphic() {
       </BarChart>
     </div>
   );
-
 }
 
 export default StatusGraphic;

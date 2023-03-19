@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useCallback } from 'react';
+import React, { useContext, useEffect, useCallback, useMemo } from 'react';
 import AppContext from '../context/AppContext';
 import ClientsContext from '../context/ClientsContext';
 import ProjectsContext from '../context/ProjectsContext';
@@ -6,7 +6,6 @@ import InputSelect from './inputSelect';
 import ProjectCard from './ProjectCard';
 
 function Projects() {
-
   const { user } = useContext(AppContext);
   const {
     userProjects,
@@ -17,64 +16,74 @@ function Projects() {
     filterOptions,
     setFilteredProjects,
   } = useContext(ProjectsContext);
-
   const { getUserClients, userClients } = useContext(ClientsContext);
 
   const filterProjects = useCallback(() => {
-    const filtered = userProjects.filter((project) => {
+    const filtered = userProjects.filter(({ status, client, name }) => {
       return (
-        project.status.includes(filterOptions.status) &&
-        project.client.name.includes(filterOptions.client) &&
-        (project.name).toLowerCase().includes((filterOptions.name).toLowerCase())
+        status.includes(filterOptions.status) &&
+        client.name.includes(filterOptions.client) &&
+        name.toLowerCase().includes(filterOptions.name.toLowerCase())
       );
     });
     setFilteredProjects(filtered);
-  }, [filterOptions, userProjects]);
+  }, [filterOptions, userProjects, setFilteredProjects]);
+
+  useEffect(() => {
+
+    getUserProjects(user);
+  }, [user, getUserProjects]);
 
   useEffect(() => {
     getUserClients(user);
-  }, [user]);
+  }, [getUserClients, user]);
 
   useEffect(() => {
     filterProjects();
-  }, [filterOptions, filterProjects, userProjects]);
+  }, [filterOptions, filterProjects]);
 
-  useEffect(() => {
-    getUserProjects(user);
-  }, [user]);
-
-  const statusFilterOptions = [
-    'Todos os Status',
-    'Fechado',
-    'Entregue',
-    'Negociando'
-  ];
-
-  const clientFilterOptions = [
-    'Todos os Clientes',
-    ...userClients.map((i) => i.name)
-  ];
+  const statusFilterOptions = useMemo(
+    () => ['Todos os Status', 'Fechado', 'Entregue', 'Negociando'],
+    []
+  );
+  const clientFilterOptions = useMemo(
+    () => ['Todos os Clientes', ...userClients.map(({ name }) => name)],
+    [userClients]
+  );
 
   return (
     <div className="projects">
-      {userProjects.length < 1 && <h3 className="input-success"> Você não possui nenhum projeto.</h3>}
+      {userProjects.length < 1 && (
+        <h3 className="input-success">Você não possui nenhum projeto.</h3>
+      )}
 
       <div className="filter-options">
         <div className="flex">
-          <InputSelect name="status" handleChange={handleChangeFilter} options={statusFilterOptions} />
-          <InputSelect name="client" handleChange={handleChangeFilter} options={clientFilterOptions} />
+          <InputSelect
+            name="status"
+            handleChange={handleChangeFilter}
+            options={statusFilterOptions}
+          />
+          <InputSelect
+            name="client"
+            handleChange={handleChangeFilter}
+            options={clientFilterOptions}
+          />
         </div>
 
-        <form name="name" onSubmit={(e) => {
-          e.preventDefault();
-          handleChangeFilter({
-            target: {
-              name: e.target.name,
-              value: e.target[0].value,
-            }
-          });
-        }}>
-          <input />
+        <form
+          name="name"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleChangeFilter({
+              target: {
+                name: e.target.name,
+                value: e.target[0].value,
+              },
+            });
+          }}
+        >
+          <input placeholder="Filtrar por nome" />
         </form>
       </div>
 
@@ -86,18 +95,10 @@ function Projects() {
         >
           <i className="fa-solid fa-plus fa-5x" />
         </button>
-        {filteredProjects ? filteredProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-          />
-        )) : userProjects.map((project) => (
-          <ProjectCard
-            key={project.id}
-            project={project}
-          />))}
+        {(filteredProjects || userProjects).map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
       </div>
-
     </div>
   );
 }

@@ -20,10 +20,6 @@ const UseProject = () => {
     name: '',
   });
 
-
-
-
-
   const getUserProjects = (user) => {
     getProjects(user)
       .then(res => {

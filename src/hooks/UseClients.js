@@ -7,6 +7,27 @@ const UseClients = () => {
   const [ userClients, setUserClients ] = useState([]);
   const { user } = useContext(AppContext);
   const [searchValue, setSearchValue] = useState();
+  const [isActiveForm, toggleClientForm] = useState(false);
+  const [inputError, setInputError] = useState();
+
+  const clientSubmit = (e) => {
+    e.preventDefault();
+    const fieldCount = e.target.length -3;
+    const fields = {};
+    for (let i = 0; i <= fieldCount ; i+= 1) {
+      fields[e.target[i].name]= (e.target[i].value);
+    }
+
+    // insertProject(data, user)
+    //   .then(res => {
+    //     console.log(res);
+    //     toggleActiveForm(false);
+    //   })
+    //   .catch(err => {
+    //     setInputError(err.response.data.message);
+    //     console.log(err.response.data);
+    //   });
+  };
 
 
   const getUserClients = () => {
@@ -22,7 +43,7 @@ const UseClients = () => {
     setSearchValue(value);
   };
 
-  return { getUserClients, searchValue, handleChangeFilter, userClients };
+  return { getUserClients, searchValue, handleChangeFilter, userClients, clientSubmit, isActiveForm, toggleClientForm, inputError, setInputError };
 };
 
 

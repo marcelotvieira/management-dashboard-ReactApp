@@ -8,7 +8,7 @@ function InputSelect({ handleChange, options, name, optionsData }) {
   return (
     <select onChange={handleChange ? handleChange : () => {}} name={ name } className="select">
       { options.map((opt, index) => (
-        <option value={optionsData ? optionsData[index] : opt} key={index}>{opt}</option>
+        <option value={optionsData ? optionsData[index].id : opt} key={index}>{opt}</option>
       ))}
     </select>
   );
