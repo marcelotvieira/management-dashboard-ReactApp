@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import ClientsContext from '../context/ClientsContext';
 
-
-// import { Container } from './styles';
 
 function ClientCard({ client }) {
+
+  const { setFocusClient } = useContext(ClientsContext);
 
   const firstContact = new Date(client.firstContact);
   const lastContact = new Date(client.lastContact);
@@ -12,7 +13,12 @@ function ClientCard({ client }) {
   const parsedLastContact = `${lastContact.getDate()}/${lastContact.getMonth()}/${lastContact.getFullYear()}`;
 
   return (
-    <div className="client-card card">
+    <div
+      className="client-card card"
+      onClick={() => {
+        setFocusClient(client);
+      } }
+    >
         
       <div className="card-header">
         <h4>{ client.name}</h4>

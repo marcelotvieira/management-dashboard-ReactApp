@@ -25,8 +25,8 @@ function ProjectFormModal() {
   ];
 
   const status = [
-    'Fechado',
     'Negociando',
+    'Fechado',
     'Entregue',
   ];
 

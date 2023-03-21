@@ -231,6 +231,7 @@
   max-width: 64.2rem;
   min-width: 64.2rem;
   border-radius: 0.8rem;
+  transition: 0.2s;
 }
 .projects .filter-options {
   display: flex;
@@ -393,9 +394,29 @@ input {
   gap: 1rem;
 }
 
+.text-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: grey;
+  margin: 1rem;
+}
+.text-label span {
+  margin-left: 1rem;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgb(80, 80, 89);
+  border-bottom: 1px solid rgb(235, 235, 243);
+  padding: 0.3rem;
+  letter-spacing: 0.5px;
+}
+
 .project-presentation {
+  margin-bottom: 1rem;
   padding: 1rem;
   min-height: 16rem;
+  border: 1px solid rgb(235, 235, 243);
+  background-color: rgb(249, 249, 252);
+  border-radius: 0.8rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -403,6 +424,11 @@ input {
 .project-presentation h1 {
   font-size: 1.5rem;
   color: rgb(80, 80, 89);
+}
+.project-presentation h4 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: rgb(128, 128, 128);
 }
 .project-presentation h3 {
   font-size: 1rem;

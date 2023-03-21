@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
-import { getClients } from '../services/request';
+import { getClients, insertClient } from '../services/request';
 
 const UseClients = () => {
 
@@ -9,6 +9,7 @@ const UseClients = () => {
   const [searchValue, setSearchValue] = useState();
   const [isActiveForm, toggleClientForm] = useState(false);
   const [inputError, setInputError] = useState();
+  const [focusClient, setFocusClient] = useState();
 
   const clientSubmit = (e) => {
     e.preventDefault();
@@ -17,16 +18,16 @@ const UseClients = () => {
     for (let i = 0; i <= fieldCount ; i+= 1) {
       fields[e.target[i].name]= (e.target[i].value);
     }
-
-    // insertProject(data, user)
-    //   .then(res => {
-    //     console.log(res);
-    //     toggleActiveForm(false);
-    //   })
-    //   .catch(err => {
-    //     setInputError(err.response.data.message);
-    //     console.log(err.response.data);
-    //   });
+    
+    insertClient(fields, user)
+      .then((res) => {
+        console.log(res);
+        toggleClientForm(false);
+      })
+      .catch(err => {
+        setInputError(err.response.data.message);
+        console.log(err.response.data);
+      });
   };
 
 
@@ -43,7 +44,7 @@ const UseClients = () => {
     setSearchValue(value);
   };
 
-  return { getUserClients, searchValue, handleChangeFilter, userClients, clientSubmit, isActiveForm, toggleClientForm, inputError, setInputError };
+  return { getUserClients, searchValue, focusClient, setFocusClient, handleChangeFilter, userClients, clientSubmit, isActiveForm, toggleClientForm, inputError, setInputError };
 };
 
 

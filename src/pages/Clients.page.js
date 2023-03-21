@@ -6,17 +6,20 @@ import Clients from '../components/Clients';
 import ClientGraphics from '../components/ClientGraphics';
 import ClientsContext from '../context/ClientsContext';
 import ClientFormModal from '../components/ClientFormModal';
+import ClientPresentation from '../components/ClientPresentation';
 
 function ClientPage() {
 
   const { user } = useContext(AppContext);
-  const { isActiveForm } = useContext(ClientsContext);
+  const { isActiveForm, focusClient } = useContext(ClientsContext);
   
   if (!user) return <Redirect to="/" />;
   return (
     <div className="box">
       <Header />
       <div className="projects-page page">
+        {focusClient && <ClientPresentation />}
+
         {isActiveForm && <ClientFormModal />}
 
         <div className="flex not-aligned">

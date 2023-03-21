@@ -13,6 +13,7 @@ function DataPage() {
     <div className="box">
       <Header />
       <div className="projects-page page">
+        <h1 className="title">Dados</h1>
         <h3>In progress</h3>
       </div>
     </div>

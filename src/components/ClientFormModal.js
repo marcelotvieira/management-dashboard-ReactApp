@@ -10,6 +10,8 @@ function ClientFormModal() {
 
 
   const { inputError, toggleClientForm, clientSubmit, setInputError } = useContext(ClientsContext);
+
+  
   
 
 
@@ -37,7 +39,7 @@ function ClientFormModal() {
 
         <div className="form-box">
           <label className="label"> Telefone
-            <input name="phone" type="number" placeholder="31xxxxxxxx" />
+            <input name="contact" type="number" placeholder="31xxxxxxxx" />
           </label>
         </div>
 

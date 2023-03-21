@@ -19,6 +19,7 @@ function Home() {
     <div className="box">
       <Header />
       <div className="projects-page page">
+        <h1 className="title">Home</h1>
         <h3>In progress</h3>
       </div>
     </div>

@@ -13,7 +13,7 @@ function Clients() {
 
   useEffect(() => {
     getUserClients(user);
-  }, [user]);
+  }, [user, getUserClients]);
 
   useEffect(() => {
     if (searchValue) {
