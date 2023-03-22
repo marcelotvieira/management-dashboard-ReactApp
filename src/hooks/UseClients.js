@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
-import { getClients, insertClient } from '../services/request';
+import { deleteClient, getClients, insertClient } from '../services/request';
 
 const UseClients = () => {
 
@@ -30,6 +30,17 @@ const UseClients = () => {
       });
   };
 
+  const handleDeleteClient = (id) => {
+    deleteClient(id, user)
+      .then(() => {
+        setFocusClient();
+      })
+      .catch(err => {
+        setInputError(err.response.data.message);
+        console.log(err.response.data);
+      });
+  };
+
 
   const getUserClients = () => {
     getClients(user)
@@ -44,7 +55,7 @@ const UseClients = () => {
     setSearchValue(value);
   };
 
-  return { getUserClients, searchValue, focusClient, setFocusClient, handleChangeFilter, userClients, clientSubmit, isActiveForm, toggleClientForm, inputError, setInputError };
+  return { handleDeleteClient, getUserClients, searchValue, focusClient, setFocusClient, handleChangeFilter, userClients, clientSubmit, isActiveForm, toggleClientForm, inputError, setInputError };
 };
 
 

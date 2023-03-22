@@ -3,7 +3,7 @@ import ProjectsContext from '../context/ProjectsContext';
 
 function ProjectPresentation() {
 
-  const { focusProject } = useContext(ProjectsContext);
+  const { focusProject, handleDeleteProject } = useContext(ProjectsContext);
 
   const initialDate = new Date(focusProject.initialDate);
   const endDate = new Date(focusProject.endDate);
@@ -17,7 +17,24 @@ function ProjectPresentation() {
   return (
     <div className="project-presentation">
       <div className="flex spaced">
-        <h1>{focusProject.name}</h1>
+        <div className="flex">
+          <h1>{focusProject.name}</h1>
+
+          <button
+            type="button"
+            className="button-icon">
+            <i className="fa-solid fa-pencil fa-lg"  value={focusProject.id} />
+          </button>
+
+          <button
+            onClick={() => handleDeleteProject(focusProject.id)}
+            type="button"
+            value={focusProject.id}
+            className="button-icon">
+            <i className="fa-solid fa-trash fa-lg" value={focusProject.id} />
+          </button>
+
+        </div>
         <div className="flex">
           {focusProject.tags.map((tag, index) => (
             <p className="presentation-tag" key={index}>{tag}</p>

@@ -5,7 +5,7 @@ import ClientsContext from '../context/ClientsContext';
 
 function ClientPresentation() {
 
-  const { focusClient } = useContext(ClientsContext);
+  const { focusClient, handleDeleteClient } = useContext(ClientsContext);
 
   const firstContact = new Date(focusClient.firstContact);
   const lastContact = new Date(focusClient.lastContact);
@@ -15,9 +15,26 @@ function ClientPresentation() {
 
   return (
     <div className="project-presentation">
-      <div className="flex spaced">
+      <div className="flex">
         <h1>{focusClient.name}</h1>
-        <h4>{focusClient.companyName}</h4>
+        <div className="flex spaced">
+
+          <div className="flex">
+            <button
+              type="button"
+              className="button-icon">
+              <i className="fa-solid fa-pencil fa-lg" />
+            </button>
+            <button
+              onClick={() => handleDeleteClient(focusClient.id)}
+              type="button"
+              className="button-icon">
+              <i className="fa-solid fa-trash fa-lg" />
+            </button>
+          </div>
+
+          <h4>{focusClient.companyName}</h4>
+        </div>
       </div>
 
 

@@ -410,6 +410,27 @@ input {
   letter-spacing: 0.5px;
 }
 
+.button-icon {
+  padding: 0.3rem;
+  border: none;
+  background: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  border: 1px solid rgb(235, 235, 243);
+  background-color: white;
+  transition: 0.1s;
+}
+.button-icon:hover {
+  background-color: rgb(161, 154, 241);
+}
+.button-icon:hover i {
+  color: white;
+}
+.button-icon i {
+  transition: 0.1s;
+  color: rgb(161, 154, 241);
+}
+
 .project-presentation {
   margin-bottom: 1rem;
   padding: 1rem;

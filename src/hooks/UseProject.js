@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
-import { getProjects, insertProject } from '../services/request';
+import { getProjects, insertProject, deleteProject } from '../services/request';
 
 const UseProject = () => {
 
@@ -80,10 +80,22 @@ const UseProject = () => {
       });
   };
 
+  const handleDeleteProject = (id) => {
+    deleteProject(id, user)
+      .then(() => {
+        setFocusProject();
+      })
+      .catch(err => {
+        setInputError(err.response.data.message);
+        console.log(err.response.data);
+      });
+  };
+
   const toggleProjectForm = () => toggleActiveForm(!isActiveForm);
 
   return {
     userProjects,
+    handleDeleteProject,
     getUserProjects,
     setUserProjects,
     setFocusProject,
