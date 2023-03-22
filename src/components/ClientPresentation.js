@@ -5,7 +5,11 @@ import ClientsContext from '../context/ClientsContext';
 
 function ClientPresentation() {
 
-  const { focusClient, handleDeleteClient } = useContext(ClientsContext);
+  const { focusClient,
+    handleDeleteClient,
+    toggleClientForm,
+    setClientEditTarget,
+  } = useContext(ClientsContext);
 
   const firstContact = new Date(focusClient.firstContact);
   const lastContact = new Date(focusClient.lastContact);
@@ -21,10 +25,15 @@ function ClientPresentation() {
 
           <div className="flex">
             <button
+              onClick={() => {
+                setClientEditTarget(focusClient);
+                toggleClientForm(true);
+              }}
               type="button"
               className="button-icon">
               <i className="fa-solid fa-pencil fa-lg" />
             </button>
+
             <button
               onClick={() => handleDeleteClient(focusClient.id)}
               type="button"

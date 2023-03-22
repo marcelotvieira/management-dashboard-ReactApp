@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import AppContext from '../context/AppContext';
-import { getProjects, insertProject, deleteProject } from '../services/request';
+import { getProjects, insertProject, deleteProject, updateProject } from '../services/request';
 
 const UseProject = () => {
 
@@ -14,6 +14,7 @@ const UseProject = () => {
   const [inputError, setInputError] = useState(false);
   const [projectTags, setProjectTags] = useState([]);
   const [filteredProjects, setFilteredProjects] = useState();
+  const [projectEditTarget, setProjectEditTarget] = useState();
   const [filterOptions, setFilterOptions] = useState({
     status: '',
     client: '',
@@ -69,11 +70,17 @@ const UseProject = () => {
     fields.tags = projectTags;
     const data = dataFormat(fields);
 
+    if (projectEditTarget) {
+      return updateProject(projectEditTarget.id, fields, user)
+        .then(() => toggleActiveForm(false))
+        .catch(err => {
+          setInputError(err.response.data.message);
+          console.log(err.response.data);
+        });
+    }
+
     insertProject(data, user)
-      .then(res => {
-        console.log(res);
-        toggleActiveForm(false);
-      })
+      .then(() => toggleActiveForm(false))
       .catch(err => {
         setInputError(err.response.data.message);
         console.log(err.response.data);
@@ -113,6 +120,8 @@ const UseProject = () => {
     filterOptions,
     visibleProjects,
     setVisibleProjects,
+    projectEditTarget,
+    setProjectEditTarget,
   };
 };
 

@@ -3,7 +3,7 @@ import ProjectsContext from '../context/ProjectsContext';
 
 function ProjectPresentation() {
 
-  const { focusProject, handleDeleteProject } = useContext(ProjectsContext);
+  const { focusProject, handleDeleteProject, toggleProjectForm, setProjectEditTarget } = useContext(ProjectsContext);
 
   const initialDate = new Date(focusProject.initialDate);
   const endDate = new Date(focusProject.endDate);
@@ -21,6 +21,10 @@ function ProjectPresentation() {
           <h1>{focusProject.name}</h1>
 
           <button
+            onClick={() => {
+              setProjectEditTarget(focusProject);
+              toggleProjectForm();
+            }}
             type="button"
             className="button-icon">
             <i className="fa-solid fa-pencil fa-lg"  value={focusProject.id} />

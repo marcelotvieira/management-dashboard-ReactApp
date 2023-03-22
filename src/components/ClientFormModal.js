@@ -9,7 +9,15 @@ registerLocale('br', br);
 function ClientFormModal() {
 
 
-  const { inputError, toggleClientForm, clientSubmit, setInputError } = useContext(ClientsContext);
+  const { 
+    inputError,
+    toggleClientForm,
+    clientSubmit,
+    setInputError,
+    clientEditTarget,
+    setClientEditTarget,
+    setFocusClient,
+  } = useContext(ClientsContext);
 
   
   
@@ -18,34 +26,67 @@ function ClientFormModal() {
   return (
     <div className=" modal">
       <form
-        onSubmit={(e) => clientSubmit(e)}
+        onSubmit={(e) => {
+          setInputError();
+          setFocusClient();
+          clientSubmit(e);
+        }}
         className="project-form">
 
         { inputError && <p className="input-error">{inputError}</p> }
         <div className="form-box">
           <label className="label"> Nome do Cliente*
-            <input name="name" className="full" type="text" placeholder="João Carlos" />
+            <input
+              name="name" 
+              className="full"
+              type="text"
+              placeholder="João Carlos"
+              defaultValue={clientEditTarget ? clientEditTarget.name : ''}
+            />
           </label>
         </div>
         
         <div className="form-box">
           <label className="label"> Nome da companhia
-            <input name="companyName" type="text" placeholder="Company Ltda" />
+            <input
+              name="companyName"
+              type="text"
+              placeholder="Company Ltda"
+              defaultValue={clientEditTarget ? clientEditTarget.companyName : ''}
+            />
           </label>
           <label className="label"> Capturado através de
-            <input name="capturedBy" type="text" placeholder="Website" />
+            <input 
+              name="capturedBy" 
+              type="text"
+              placeholder="Website"
+              defaultValue={clientEditTarget ? clientEditTarget.capturedBy : ''}
+            />
           </label>
         </div>
 
         <div className="form-box">
           <label className="label"> Telefone
-            <input name="contact" type="number" placeholder="31xxxxxxxx" />
+            <input 
+              name="contact" 
+              type="number"
+              placeholder="31xxxxxxxx"
+              defaultValue={clientEditTarget ? clientEditTarget.contact : ''}
+
+            />
           </label>
         </div>
 
         <div className="form-box">
           <label className="label"> Email de contato
-            <input name="email" className="full" type="text" placeholder="contato@email.com" />
+            <input 
+              name="email"
+              className="full"
+              type="text" 
+              placeholder="contato@email.com"
+              defaultValue={clientEditTarget ? clientEditTarget.email : ''}
+
+            />
           </label>
         </div>
 
@@ -53,6 +94,7 @@ function ClientFormModal() {
           <button type="button"
             className="cancel"
             onClick={() => {
+              setClientEditTarget();
               toggleClientForm(false);
               setInputError(false);
             }}
